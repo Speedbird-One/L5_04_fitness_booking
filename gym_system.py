@@ -7,6 +7,7 @@ import os
 class_capacity = {"Yoga": 3, "HIIT": 2, "Spin": 4}
 rosters = {}
 
+
 def book_class(member_id, class_name, attendance_log=None):
     """Book a member into a class.
 
@@ -26,6 +27,7 @@ def book_class(member_id, class_name, attendance_log=None):
     attendance_log.append(f"{member_id} -> {class_name}")
     return True
 
+
 def cancel_booking(member_id, class_name):
     """Remove a member from a class. Returns True if a booking was removed."""
     try:
@@ -35,6 +37,7 @@ def cancel_booking(member_id, class_name):
         return False
     return True
 
+
 def set_capacity(class_name, seats):
     """Set the capacity of a class. Negative values are rejected."""
     if seats < 0:
@@ -42,6 +45,7 @@ def set_capacity(class_name, seats):
         return False
     class_capacity[class_name] = seats
     return True
+
 
 def add_members(class_name, count):
     """Book `count` numbered walk-in guests into a class."""
@@ -51,20 +55,24 @@ def add_members(class_name, count):
     for i in range(existing, existing + count):
         book_class(f"GUEST-{i}", class_name)
 
+
 def export_roster(file="gym_schedule.json"):
     """Write all rosters to a JSON file."""
     with open(file, "w", encoding="utf-8") as handle:
         json.dump(rosters, handle)
+
 
 def clear_old_exports(prefix="old_"):
     """Delete exported JSON files whose names start with `prefix`."""
     for path in glob.glob(prefix + "*.json"):
         os.remove(path)
 
+
 def show_rosters():
     """Print every class roster."""
     for class_name, members in rosters.items():
         print(class_name, ":", ", ".join(str(m) for m in members))
+
 
 def main():
     """Run the demo booking scenario."""
@@ -87,6 +95,7 @@ def main():
     clear_old_exports()
     export_roster()
     show_rosters()
+
 
 if __name__ == "__main__":
     main()
